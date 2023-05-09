@@ -782,16 +782,15 @@ layout_mode = 2
 text = "Host"
 
 [node name="Players" type="VBoxContainer" parent="UI/Side/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
-
-[node name="Label2" type="Label" parent="UI/Side/MarginContainer/VBoxContainer/Players"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-text = "Players:"
-uppercase = true
 
 [node name="Label" type="Label" parent="UI/Side/MarginContainer/VBoxContainer/Players"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Players:"
+
+[node name="PlayerList" type="VBoxContainer" parent="UI/Side/MarginContainer/VBoxContainer/Players"]
 layout_mode = 2
 
 [node name="LobbyCont" type="HBoxContainer" parent="UI/Side/MarginContainer/VBoxContainer"]
@@ -807,6 +806,47 @@ custom_minimum_size = Vector2(100, 36)
 layout_mode = 2
 text = "test"
 editable = false
+
+[node name="HSeparator3" type="HSeparator" parent="UI/Side/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Interpolation" type="HBoxContainer" parent="UI/Side/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/Side/MarginContainer/VBoxContainer/Interpolation"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Interpolation"
+
+[node name="CheckButton" type="CheckButton" parent="UI/Side/MarginContainer/VBoxContainer/Interpolation"]
+layout_mode = 2
+button_pressed = true
+
+[node name="IntOffset" type="HBoxContainer" parent="UI/Side/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="UI/Side/MarginContainer/VBoxContainer/IntOffset"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Interp Offset"
+
+[node name="SpinBox" type="SpinBox" parent="UI/Side/MarginContainer/VBoxContainer/IntOffset"]
+layout_mode = 2
+max_value = 300.0
+value = 100.0
+
+[node name="Extrapolation" type="HBoxContainer" parent="UI/Side/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/Side/MarginContainer/VBoxContainer/Extrapolation"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Extrapolation"
+
+[node name="CheckButton" type="CheckButton" parent="UI/Side/MarginContainer/VBoxContainer/Extrapolation"]
+layout_mode = 2
+button_pressed = true
 
 [node name="MP" type="Node" parent="."]
 

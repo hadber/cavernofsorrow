@@ -10,7 +10,18 @@ var deltaLatency:int = 0
 var decimalCollector:float = 0
 var latencyArray:Array = []
 
-const INTERP_OFFSET = 100
+var INTERP_OFFSET = 100
+var do_interpolation:bool = true
+var do_extrapolation:bool = true
+
+func change_intp(new_value:bool):
+	do_interpolation = new_value
+
+func change_extp(new_value:bool):
+	do_extrapolation = new_value
+
+func change_offset(new_value:int):
+	INTERP_OFFSET = new_value
 
 func _process(_delta):
 	Multiplayer._send_p2p_packet("host", Steam.P2P_SEND_UNRELIABLE, Multiplayer.Packet.PLAYERSTATE, WorldState.PlayerState)
@@ -37,10 +48,10 @@ func _physics_process(delta):
 	
 	#var renderTime = Time.get_ticks_msec() - INTERP_OFFSET
 	var renderTime = clientClock - INTERP_OFFSET
-	if worldStateBuffer.size() > 1: # interpolation
+	if worldStateBuffer.size() > 1:
 		while worldStateBuffer.size() > 2 and renderTime > worldStateBuffer[2]["T"]:
 			worldStateBuffer.pop_at(0)
-		if worldStateBuffer.size() > 2:
+		if worldStateBuffer.size() > 2 and do_interpolation: # interpolation
 			var interpolationFactor = float(renderTime - worldStateBuffer[1]["T"]) / float(worldStateBuffer[2]["T"] - worldStateBuffer[1]["T"])
 			for playerID in worldStateBuffer[2].keys():
 				if str(playerID) == "T":
@@ -54,11 +65,10 @@ func _physics_process(delta):
 					continue
 				if(Multiplayer.get_node("OtherPlayers")).has_node(str(playerID)):
 					var newPos:Vector2 = lerp(worldStateBuffer[1][playerID]["P"], worldStateBuffer[2][playerID]["P"], interpolationFactor)
-		#			print(worldStateBuffer[0][playerID]["P"], worldStateBuffer[1][playerID]["P"], interpolationFactor, newPos, renderTime)
 					Multiplayer.get_node("OtherPlayers/" + str(playerID)).remote_movement(newPos)
 				else:
 					WorldState.add_remote_player(str(playerID), worldStateBuffer[2][playerID]["P"])
-		elif renderTime > worldStateBuffer[1].T: # extrapolation
+		elif renderTime > worldStateBuffer[1].T and do_extrapolation: # extrapolation
 			var extrapolationFactor = float(renderTime - worldStateBuffer[0]["T"]) / float(worldStateBuffer[1]["T"] - worldStateBuffer[0]["T"]) - 1.0
 			for playerID in worldStateBuffer[1].keys():
 				if str(playerID) == "T":
@@ -71,7 +81,17 @@ func _physics_process(delta):
 					var positionDelta = worldStateBuffer[1][playerID]["P"] - worldStateBuffer[0][playerID]["P"]
 					var newPos:Vector2 = worldStateBuffer[1][playerID]["P"] + (positionDelta * extrapolationFactor)
 					Multiplayer.get_node("OtherPlayers/" + str(playerID)).remote_movement(newPos)
-
+		else: #nothing
+			for playerID in worldStateBuffer[1].keys():
+				if str(playerID) == "T":
+					continue
+				if playerID == Global.my_steam_id:
+					continue
+				if not worldStateBuffer[1].has(playerID):
+					continue
+				if(Multiplayer.get_node("OtherPlayers")).has_node(str(playerID)):
+					var newPos:Vector2 = worldStateBuffer[1][playerID]["P"]
+					Multiplayer.get_node("OtherPlayers/" + str(playerID)).remote_movement(newPos)
 func start_clock_sync():
 	var pTime:Dictionary = {"T": Time.get_ticks_msec()}# .get_system_time_msecs()}
 	Multiplayer._send_p2p_packet("host", Steam.P2P_SEND_RELIABLE, Multiplayer.Packet.GET_SERVERTIME, pTime)

@@ -10,6 +10,7 @@ enum Packet {HANDSHAKE, SPAWN_PLAYER, WORLDSTATE, PLAYERSTATE, GET_SERVERTIME,
 @onready var button_join = $UI/Side/MarginContainer/VBoxContainer/RoomsButtonsCont/HBoxContainer/ButtonJoin 
 @onready var lobby_status = $UI/Side/MarginContainer/VBoxContainer/LobbyCont 
 @onready var join_lobby_id = $UI/Side/MarginContainer/VBoxContainer/JoinLobbyID
+@onready var player_list = $UI/Side/MarginContainer/VBoxContainer/Players/PlayerList
 
 var host_steam_id: int = 0
 var lobby_members:Array = []
@@ -34,6 +35,11 @@ func _ready():
 
 	WorldState.world_root = self
 	WorldState.add_local_player()
+
+	$UI/Side/MarginContainer/VBoxContainer/Interpolation/CheckButton.toggled.connect($MP/Client.change_intp)
+	$UI/Side/MarginContainer/VBoxContainer/Extrapolation/CheckButton.toggled.connect($MP/Client.change_extp)
+	$UI/Side/MarginContainer/VBoxContainer/IntOffset/SpinBox.value_changed.connect($MP/Client.change_offset)
+
 
 func _setup_steam():
 	Steam.steamInit()
@@ -61,6 +67,8 @@ func _create_lobby():
 		print("Already in a lobby! Can't create a new one.")
 
 func _join_lobby():
+	if Global.steam_lobby_id != 0:
+		return
 	print("Attempting to join a lobby...")
 	var lobby_id_str: String = LOBBY_ID_HEX_PREFIX + join_lobby_id.text
 	var lobby_id: int = lobby_id_str.hex_to_int()
@@ -87,6 +95,8 @@ func _on_lobby_created(connection_result: int, lobby_id: int):
 			Steam.setLobbyData(lobby_id, "type", "cavern_lobby")
 			var lobby_id_hex: String = ("%X" % lobby_id).substr(LOBBY_ID_HEX_PREFIX.length())
 			lobby_status.get_child(1).text = lobby_id_hex
+			_get_lobby_members()
+			_update_player_list()
 			lobby_status.visible = true
 		2: # k_EResultFail - The server responded, but with an unknown internal error.
 			print("ERROR: The server responded, but with an unknown internal error.")
@@ -109,6 +119,7 @@ func _on_lobby_joined(lobby_id:int, _permissions:int, _locked:bool, response:int
 		host_steam_id = Steam.getLobbyOwner(lobby_id)
 		_get_lobby_members()
 		$MP/Client.start_clock_sync()
+		button_join.disabled = true
 		
 		for member in lobby_members:
 			if(member.steam_id == Global.my_steam_id):
@@ -260,6 +271,7 @@ func _lobby_members_change(changed_id:int, chat_state:int):
 				WorldState.remove_remote_player(str(changed_id))
 	else:
 		_get_lobby_members()
+	_update_player_list()
 
 func _on_p2p_session_request(remote_id:int):
 	print("Got a P2P session request, sending a handshake back...")
@@ -289,3 +301,14 @@ func _on_p2p_session_connect_fail(lobby_id:int, session_error:int):
 
 func spawn_on_remote(targetID:int, posx:float, posy:float, my_color:Color = Color.GHOST_WHITE):
 	_send_p2p_packet(str(targetID), Steam.P2P_SEND_RELIABLE, Packet.SPAWN_PLAYER, {"x": posx, "y": posy, "my_color": my_color})
+
+func _update_player_list():
+	$UI/Side/MarginContainer/VBoxContainer/Players.visible = true
+	for child in player_list.get_children():
+		child.queue_free()
+	
+	for member in lobby_members:
+		var label = Label.new()
+		label.add_theme_color_override("font_color", Color.BLACK)
+		label.text = "  - " + member.steam_name
+		player_list.add_child(label)
