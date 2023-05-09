@@ -148,7 +148,7 @@ func _read_p2p_packet():
 			print("EPIC FAIL: read an empty packet with non-zero size.")
 		
 		# remote sender information
-		var senderID:String = str(packet.steamIDRemote)
+		var senderID:String = str(packet.steam_id_remote)
 		var packetCode:int = packet.data[0]
 		
 		var packetRead:Dictionary = bytes_to_var(packet.data.subarray(1, packetSize-1))
@@ -161,7 +161,7 @@ func _read_p2p_packet():
 				#print("Got a new worldstate update, please do something with this!")
 				$MP/Client.update_worldstate(packetRead)
 			Packet.PLAYERSTATE:
-				$MP/Server.update_remote_playerstate(packetRead, packet.steamIDRemote)
+				$MP/Server.update_remote_playerstate(packetRead, packet.steam_id_remote)
 			Packet.SPAWN_PLAYER:
 				print("Trying to spawn player on: ", packetRead)
 				WorldState.add_remote_player(senderID, Vector2(packetRead.x, packetRead.y))
