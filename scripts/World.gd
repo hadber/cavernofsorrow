@@ -175,7 +175,7 @@ func _read_p2p_packet():
 				# such as color
 				if i_am_host():
 					for member in lobby_members:
-						if member.steam_id == Global.my_steam_id or member.steam_id == senderID:
+						if int(member.steam_id) == Global.my_steam_id or member.steam_id == senderID:
 							continue
 						WorldState.add_remote_player(member, Vector2(packetRead.x, packetRead.y), packetRead.my_color)
 						
