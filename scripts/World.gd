@@ -39,8 +39,10 @@ func _create_lobby():
 	Steam.createLobby(Steam.LOBBY_TYPE_INVISIBLE, 2)
 
 func _join_lobby():
-	var lobby_id: String = LOBBY_ID_HEX_PREFIX + join_lobby_id.text
-
+	var lobby_id_str: String = LOBBY_ID_HEX_PREFIX + join_lobby_id.text
+	var lobby_id: int = lobby_id_str.hex_to_int()
+	Steam.joinLobby(lobby_id)
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	Steam.run_callbacks()
