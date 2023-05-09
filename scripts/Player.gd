@@ -12,7 +12,7 @@ var my_color: Color
 
 func set_color(a_new_color):
 	my_color = a_new_color
-	#self.modulate = my_color
+	self.modulate = my_color
 
 func spawn_me(where:Vector2):
 	position = where

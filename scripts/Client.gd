@@ -92,6 +92,7 @@ func _physics_process(delta):
 				if(Multiplayer.get_node("OtherPlayers")).has_node(str(playerID)):
 					var newPos:Vector2 = worldStateBuffer[1][playerID]["P"]
 					Multiplayer.get_node("OtherPlayers/" + str(playerID)).remote_movement(newPos)
+
 func start_clock_sync():
 	var pTime:Dictionary = {"T": Time.get_ticks_msec()}# .get_system_time_msecs()}
 	Multiplayer._send_p2p_packet("host", Steam.P2P_SEND_RELIABLE, Multiplayer.Packet.GET_SERVERTIME, pTime)
