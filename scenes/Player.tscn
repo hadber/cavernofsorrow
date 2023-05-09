@@ -86,7 +86,7 @@ animations = [{
 size = Vector2(12, 5.33333)
 
 [node name="Player" type="CharacterBody2D"]
-scale = Vector2(3, 3)
+scale = Vector2(4, 4)
 motion_mode = 1
 script = ExtResource("1_lsnmk")
 

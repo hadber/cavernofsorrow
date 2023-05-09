@@ -1,0 +1,9 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://bsdrrocbmnd5j"]
+
+[ext_resource type="FontFile" uid="uid://cfssel77kj4k0" path="res://assets/fonts/pixel_operator/PixelOperatorMono-Bold.ttf" id="1_ari1s"]
+
+[sub_resource type="FontVariation" id="FontVariation_hvbyd"]
+base_font = ExtResource("1_ari1s")
+
+[resource]
+default_font = SubResource("FontVariation_hvbyd")

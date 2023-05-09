@@ -9,8 +9,9 @@ var remotePlayers:Array = []
 var currentRoom
 
 func _ready():
-	Player1 = PlayerScene.instance()
-	Player1.get_node("CenterContainer/Name").text = Steam.getFriendPersonaName(Global.gSteamID)
+	pass
+	#Player1 = PlayerScene.instance()
+	#Player1.get_node("CenterContainer/Name").text = Steam.getFriendPersonaName(Global.gSteamID)
 
 func add_remote_player(pSteamID:String, pPos:Vector2):
 	var remotePlayer = PlayerScene.instance()

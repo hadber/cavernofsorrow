@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bl8kb2np813nd"]
+[gd_scene load_steps=9 format=3 uid="uid://bl8kb2np813nd"]
 
 [ext_resource type="Texture2D" uid="uid://cg7swosjwr1de" path="res://assets/things_0.png" id="1_dm7p8"]
 [ext_resource type="Texture2D" uid="uid://d01v2j8yy8mcr" path="res://assets/basictiles_2.png" id="1_s7key"]
+[ext_resource type="Script" path="res://scripts/World.gd" id="1_xb3n4"]
 [ext_resource type="PackedScene" uid="uid://bvkl10q86vbd3" path="res://scenes/Player.tscn" id="3_xycce"]
+[ext_resource type="Theme" uid="uid://bsdrrocbmnd5j" path="res://assets/Theme.tres" id="4_xnsvv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sxxq6"]
 texture = ExtResource("1_dm7p8")
@@ -620,9 +622,10 @@ sources/0 = SubResource("TileSetAtlasSource_sxxq6")
 
 [node name="World" type="Node2D"]
 texture_filter = 1
+script = ExtResource("1_xb3n4")
 
 [node name="TileMap" type="TileMap" parent="."]
-scale = Vector2(3, 3)
+scale = Vector2(4, 4)
 tile_set = SubResource("TileSet_y5emk")
 format = 2
 layer_0/name = "Floor"
@@ -645,3 +648,145 @@ layer_2/tile_data = PackedInt32Array(65546, 327681, 6, 65547, 458753, 6, 10, 327
 [node name="Player" parent="." instance=ExtResource("3_xycce")]
 position = Vector2(171, 347)
 metadata/_edit_group_ = true
+
+[node name="UI" type="Node" parent="."]
+
+[node name="Side" type="Control" parent="UI"]
+layout_mode = 3
+anchor_left = 0.764706
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource("4_xnsvv")
+metadata/_edit_use_anchors_ = true
+
+[node name="Bg" type="Control" parent="UI/Side"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_group_ = true
+
+[node name="ColorRect" type="ColorRect" parent="UI/Side/Bg"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.109804, 0.109804, 0.109804, 0.784314)
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Side/Bg"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="ColorRect" type="ColorRect" parent="UI/Side/Bg/MarginContainer"]
+layout_mode = 2
+color = Color(0.933333, 0.933333, 0.933333, 0.784314)
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Side"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Side/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="SteamUsername" type="Label" parent="UI/Side/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Username:"
+
+[node name="SteamID" type="Label" parent="UI/Side/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "SteamID:
+"
+
+[node name="Rooms" type="ScrollContainer" parent="UI/Side/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+
+[node name="ItemList" type="ItemList" parent="UI/Side/MarginContainer/VBoxContainer/Rooms"]
+layout_mode = 2
+size_flags_horizontal = 3
+auto_height = true
+item_count = 3
+item_0/text = "Test1"
+item_1/text = "Test2"
+item_2/text = "Item3"
+
+[node name="RoomsButtonsCont" type="CenterContainer" parent="UI/Side/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Side/MarginContainer/VBoxContainer/RoomsButtonsCont"]
+layout_mode = 2
+
+[node name="ButtonJoin" type="Button" parent="UI/Side/MarginContainer/VBoxContainer/RoomsButtonsCont/HBoxContainer"]
+layout_mode = 2
+text = "Join"
+
+[node name="ButtonRefresh" type="Button" parent="UI/Side/MarginContainer/VBoxContainer/RoomsButtonsCont/HBoxContainer"]
+layout_mode = 2
+text = "Refresh"
+
+[node name="Label" type="Label" parent="UI/Side/MarginContainer/VBoxContainer/RoomsButtonsCont/HBoxContainer"]
+layout_mode = 2
+text = "ID"
+
+[node name="CheckButton" type="CheckButton" parent="UI/Side/MarginContainer/VBoxContainer/RoomsButtonsCont/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="UI/Side/MarginContainer/VBoxContainer/RoomsButtonsCont/HBoxContainer"]
+layout_mode = 2
+text = "List"
+
+[node name="HostCont" type="CenterContainer" parent="UI/Side/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ButtonHost" type="Button" parent="UI/Side/MarginContainer/VBoxContainer/HostCont"]
+layout_mode = 2
+text = "Host"
+
+[node name="Players" type="VBoxContainer" parent="UI/Side/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="UI/Side/MarginContainer/VBoxContainer/Players"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+text = "Players:"
+uppercase = true
+
+[node name="Label" type="Label" parent="UI/Side/MarginContainer/VBoxContainer/Players"]
+layout_mode = 2
+
+[node name="LobbyCont" type="HBoxContainer" parent="UI/Side/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LobbyText" type="Label" parent="UI/Side/MarginContainer/VBoxContainer/LobbyCont"]
+layout_mode = 2
+text = "Lobby ID:"
+
+[node name="LobbyID" type="TextEdit" parent="UI/Side/MarginContainer/VBoxContainer/LobbyCont"]
+custom_minimum_size = Vector2(100, 36)
+layout_mode = 2
+text = "test"
+editable = false

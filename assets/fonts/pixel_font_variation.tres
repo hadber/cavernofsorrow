@@ -1,0 +1,6 @@
+[gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://cqk4v05sx5qnw"]
+
+[ext_resource type="FontFile" uid="uid://cfssel77kj4k0" path="res://assets/fonts/pixel_operator/PixelOperatorMono-Bold.ttf" id="1_br6ft"]
+
+[resource]
+base_font = ExtResource("1_br6ft")

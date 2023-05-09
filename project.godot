@@ -18,12 +18,12 @@ config/icon="res://assets/ghost_icon.png"
 [autoload]
 
 Global="*res://scripts/Global.gd"
-gWorld="*res://scripts/gWorld.gd"
 
 [display]
 
-window/size/viewport_width=624
-window/size/viewport_height=432
+window/size/viewport_width=1088
+window/size/viewport_height=576
+window/size/resizable=false
 
 [input]
 
