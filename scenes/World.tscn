@@ -1,10 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://bl8kb2np813nd"]
+[gd_scene load_steps=12 format=3 uid="uid://bl8kb2np813nd"]
 
 [ext_resource type="Texture2D" uid="uid://cg7swosjwr1de" path="res://assets/things_0.png" id="1_dm7p8"]
 [ext_resource type="Texture2D" uid="uid://d01v2j8yy8mcr" path="res://assets/basictiles_2.png" id="1_s7key"]
 [ext_resource type="Script" path="res://scripts/World.gd" id="1_xb3n4"]
 [ext_resource type="PackedScene" uid="uid://bvkl10q86vbd3" path="res://scenes/Player.tscn" id="3_xycce"]
 [ext_resource type="Theme" uid="uid://bsdrrocbmnd5j" path="res://assets/Theme.tres" id="4_xnsvv"]
+[ext_resource type="Script" path="res://scripts/Client.gd" id="6_j7jij"]
+[ext_resource type="Script" path="res://scripts/Server.gd" id="6_n2hot"]
+[ext_resource type="Script" path="res://scripts/StateProcessing.gd" id="7_mdogb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sxxq6"]
 texture = ExtResource("1_dm7p8")
@@ -649,6 +652,9 @@ layer_2/tile_data = PackedInt32Array(65546, 327681, 6, 65547, 458753, 6, 10, 327
 position = Vector2(171, 347)
 metadata/_edit_group_ = true
 
+[node name="OtherPlayers" type="Node2D" parent="."]
+y_sort_enabled = true
+
 [node name="UI" type="Node" parent="."]
 
 [node name="Side" type="Control" parent="UI"]
@@ -805,3 +811,17 @@ custom_minimum_size = Vector2(100, 36)
 layout_mode = 2
 text = "test"
 editable = false
+
+[node name="MP" type="Node" parent="."]
+
+[node name="Client" type="Node" parent="MP"]
+script = ExtResource("6_j7jij")
+
+[node name="Server" type="Node" parent="MP"]
+script = ExtResource("6_n2hot")
+
+[node name="ProcessingTimer" type="Timer" parent="MP/Server"]
+wait_time = 0.05
+
+[node name="StateProcessing" type="Node" parent="MP/Server"]
+script = ExtResource("7_mdogb")

@@ -1,6 +1,7 @@
 extends Node
 
-var steamLobbyID: int = 0
+var steam_lobby_id: int = 0
+var my_steam_id: int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

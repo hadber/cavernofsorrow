@@ -18,6 +18,7 @@ config/icon="res://assets/ghost_icon.png"
 [autoload]
 
 Global="*res://scripts/Global.gd"
+WorldState="*res://scripts/WorldState.gd"
 
 [display]
 
