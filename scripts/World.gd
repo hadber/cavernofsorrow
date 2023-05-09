@@ -32,6 +32,8 @@ func _ready():
 	Steam.p2p_session_connect_fail.connect(_on_p2p_session_connect_fail)
 	Steam.lobby_chat_update.connect(_on_lobby_chat_update)
 
+	WorldState.world_root = self
+
 func _setup_steam():
 	Steam.steamInit()
 	
@@ -151,7 +153,7 @@ func _read_p2p_packet():
 		var senderID:String = str(packet.steam_id_remote)
 		var packetCode:int = packet.data[0]
 		
-		var packetRead:Dictionary = bytes_to_var(packet.data.slice(1, packetSize-1))
+		var packetRead:Dictionary = bytes_to_var(packet.data.slice(1, packetSize))
 		
 		match packetCode:
 			Packet.HANDSHAKE: # first packet sent to establish connection

@@ -11,6 +11,12 @@ var networked:bool = false
 # TODO: make the button for example O hide and show UI, and have a UI with different sliders,
 # toggles and stuff and also a "HOST" button which will open a room for friends to join in :)
 
+func spawn_me(where:Vector2):
+	# This function is called when a player enter a new room via a door
+	# Called by the door it enterd through, to spawn in the new room
+	position = where
+	pass
+
 func _movement(delta):
 
 	var input_vector = Vector2.ZERO
@@ -36,14 +42,8 @@ func add_player_state():
 	WorldState.add_player_state(player_state)
 
 func _physics_process(delta):
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-#	var direction = Input.get_axis("ui_left", "ui_right")
-#	if direction:
-#		velocity.x = direction * SPEED
-#	else:
-#		velocity.x = move_toward(velocity.x, 0, SPEED)
-#
-#	move_and_slide()
 	if(not networked):
 		_movement(delta)
+
+func remote_movement(where:Vector2):
+	position = where
