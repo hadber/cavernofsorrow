@@ -2,14 +2,16 @@ extends Node2D
 
 @onready var button_host = $UI/Side/MarginContainer/VBoxContainer/HostCont/ButtonHost
 @onready var refresh_button = $UI/Side/MarginContainer/VBoxContainer/RoomsButtonsCont/HBoxContainer/ButtonRefresh
-@onready var join_button = $UI/Side/MarginContainer/VBoxContainer/RoomsButtonsCont/HBoxContainer/ButtonJoin 
+@onready var button_join = $UI/Side/MarginContainer/VBoxContainer/RoomsButtonsCont/HBoxContainer/ButtonJoin 
 @onready var lobby_status = $UI/Side/MarginContainer/VBoxContainer/LobbyCont 
+@onready var join_lobby_id = $UI/Side/MarginContainer/VBoxContainer/JoinLobbyID
 
 const LOBBY_ID_HEX_PREFIX = "1860000"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	button_host.pressed.connect(_create_lobby)
+	button_join.pressed.connect(_join_lobby)
 	lobby_status.visible = false
 
 	_setup_steam()
@@ -35,6 +37,9 @@ func _create_lobby():
 	print("Attempting to create a lobby...")
 	button_host.disabled = true
 	Steam.createLobby(Steam.LOBBY_TYPE_INVISIBLE, 2)
+
+func _join_lobby():
+	var lobby_id: String = LOBBY_ID_HEX_PREFIX + join_lobby_id.text
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):

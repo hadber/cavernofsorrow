@@ -721,6 +721,7 @@ text = "SteamID:
 "
 
 [node name="Rooms" type="ScrollContainer" parent="UI/Side/MarginContainer/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 
@@ -732,6 +733,10 @@ item_count = 3
 item_0/text = "Test1"
 item_1/text = "Test2"
 item_2/text = "Item3"
+
+[node name="JoinLobbyID" type="TextEdit" parent="UI/Side/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
 
 [node name="RoomsButtonsCont" type="CenterContainer" parent="UI/Side/MarginContainer/VBoxContainer"]
 layout_mode = 2
