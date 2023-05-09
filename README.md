@@ -2,6 +2,8 @@
 
 A small demo multiplayer game showcasing how netcode is done, using the Godot engine with GodotSteam plugin.
 
+![map](assets/map.gif)
+
 ## Installation
 
 - You need [Godot](https://godotengine.org/), which you can download from their site, or even from [Steam](https://store.steampowered.com/app/404790/Godot_Engine/)
