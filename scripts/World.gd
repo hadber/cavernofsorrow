@@ -151,7 +151,7 @@ func _read_p2p_packet():
 		var senderID:String = str(packet.steam_id_remote)
 		var packetCode:int = packet.data[0]
 		
-		var packetRead:Dictionary = bytes_to_var(packet.data.subarray(1, packetSize-1))
+		var packetRead:Dictionary = bytes_to_var(packet.data.slice(1, packetSize-1))
 		
 		match packetCode:
 			Packet.HANDSHAKE: # first packet sent to establish connection
