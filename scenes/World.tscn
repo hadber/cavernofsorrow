@@ -720,6 +720,9 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "SteamID:
 "
 
+[node name="HSeparator2" type="HSeparator" parent="UI/Side/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
 [node name="Rooms" type="ScrollContainer" parent="UI/Side/MarginContainer/VBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(0, 64)
@@ -749,19 +752,26 @@ layout_mode = 2
 text = "Join"
 
 [node name="ButtonRefresh" type="Button" parent="UI/Side/MarginContainer/VBoxContainer/RoomsButtonsCont/HBoxContainer"]
+visible = false
 layout_mode = 2
 text = "Refresh"
 
 [node name="Label" type="Label" parent="UI/Side/MarginContainer/VBoxContainer/RoomsButtonsCont/HBoxContainer"]
+visible = false
 layout_mode = 2
 text = "ID"
 
 [node name="CheckButton" type="CheckButton" parent="UI/Side/MarginContainer/VBoxContainer/RoomsButtonsCont/HBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="Label2" type="Label" parent="UI/Side/MarginContainer/VBoxContainer/RoomsButtonsCont/HBoxContainer"]
+visible = false
 layout_mode = 2
 text = "List"
+
+[node name="HSeparator" type="HSeparator" parent="UI/Side/MarginContainer/VBoxContainer"]
+layout_mode = 2
 
 [node name="HostCont" type="CenterContainer" parent="UI/Side/MarginContainer/VBoxContainer"]
 layout_mode = 2
