@@ -1,7 +1,7 @@
 # Cavern of Sorrow
 
 A small demo multiplayer game showcasing how netcode is done, using the Godot engine with GodotSteam plugin.
-___
+
 ## Installation
 
 - You need [Godot](https://godotengine.org/), which you can download from their site, or even from [Steam](https://store.steampowered.com/app/404790/Godot_Engine/)
@@ -12,7 +12,7 @@ ___
     - in `addons/godotsteam/sdk` add the folders `redistributable_bin` and `public` from Steamworks SDK
 
 - You are now ready!
-___
+
 ## Additional resources:
 
 https://www.youtube.com/watch?v=lnFN6YabFKg&list=PLZ-54sd-DMAKU8Neo5KsVmq8KtoDkfi4s&index=1 - godot netcode with rpc (code was mostly based on this)
@@ -33,7 +33,7 @@ https://fabiensanglard.net/quakeSource/quakeSourceNetWork.php - quake engine cod
 
 https://www.youtube.com/watch?v=h3qDOSJneFA - title
 
----
+
 ## Credits
 Tiles and sprites - https://opengameart.org/content/tiny-16-basic  
 Font  - https://www.dafont.com/pixel-operator.font
