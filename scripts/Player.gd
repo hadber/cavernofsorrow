@@ -45,5 +45,15 @@ func _physics_process(delta):
 	if(not networked):
 		_movement(delta)
 
-func remote_movement(where:Vector2):
-	position = where
+func remote_movement(new_position:Vector2):
+	var pos_delta:Vector2 = position-new_position
+	if pos_delta.y > 0:
+		_animated_sprite.play("walk_up")
+	elif pos_delta.y < 0:
+		_animated_sprite.play("walk_down")
+	elif pos_delta.x > 0:
+		_animated_sprite.play("walk_left")
+	elif pos_delta.x < 0:
+		_animated_sprite.play("walk_right")
+
+	position = new_position
