@@ -168,6 +168,17 @@ func _read_p2p_packet():
 			Packet.SPAWN_PLAYER:
 				print("Trying to spawn player on: ", packetRead)
 				WorldState.add_remote_player(senderID, Vector2(packetRead.x, packetRead.y), packetRead.my_color)
+				
+				# when someone joins our lobby, if we are host, we should tell everyone else 
+				# to also spawn that player with the appropriate colors, otherwise
+				# it will simply appear from the worldstates and might lack crucial information
+				# such as color
+				if i_am_host():
+					for member in lobby_members:
+						if member == Global.my_steam_id or member == senderID:
+							continue
+						WorldState.add_remote_player(member, Vector2(packetRead.x, packetRead.y), packetRead.my_color)
+						
 			Packet.GET_SERVERTIME:
 				var sTimes:Dictionary = {"S": Time.get_ticks_msec(), "C": packetRead.T}
 				_send_p2p_packet(senderID, Steam.P2P_SEND_RELIABLE, Packet.SET_SERVERTIME, sTimes)
@@ -220,7 +231,7 @@ func _on_lobby_chat_update(_lobby_id:int, changed_id:int, making_change_id:int, 
 	
 	match chat_state:
 		1: # player has joined the lobby
-			#spawn_on_remote(making_change_id, WorldState.Player1.position.x, WorldState.Player1.position.y, )
+			spawn_on_remote(making_change_id, WorldState.Player1.position.x, WorldState.Player1.position.y, WorldState.Player1.my_color)
 			print(changer_name, " has joined the game.")
 		2: # player has left the lobby
 			print(changer_name, " has left the game.")

@@ -10,18 +10,12 @@ var my_color: Color
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 #var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
-# TODO: make the button for example O hide and show UI, and have a UI with different sliders,
-# toggles and stuff and also a "HOST" button which will open a room for friends to join in :)
-
 func set_color(a_new_color):
 	my_color = a_new_color
 	self.modulate = my_color
 
 func spawn_me(where:Vector2):
-	# This function is called when a player enter a new room via a door
-	# Called by the door it enterd through, to spawn in the new room
 	position = where
-	pass
 
 func _movement(delta):
 
