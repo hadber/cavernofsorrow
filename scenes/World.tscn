@@ -848,6 +848,17 @@ text = "Extrapolation"
 layout_mode = 2
 button_pressed = true
 
+[node name="PausePackets" type="HBoxContainer" parent="UI/Side/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/Side/MarginContainer/VBoxContainer/PausePackets"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Pause Packets"
+
+[node name="CheckButton" type="CheckButton" parent="UI/Side/MarginContainer/VBoxContainer/PausePackets"]
+layout_mode = 2
+
 [node name="MP" type="Node" parent="."]
 
 [node name="Client" type="Node" parent="MP"]

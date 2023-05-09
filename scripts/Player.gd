@@ -5,10 +5,14 @@ const ACCELERATION: int = 2500
 const FRICTION: int = 2500
 var networked: bool = false
 var my_color: Color
+var pause_packets: bool = false
 
 @onready var _animated_sprite = $AnimatedSprite2D
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 #var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+
+func set_pause_packets(new_value:bool):
+	pause_packets = new_value
 
 func set_color(a_new_color):
 	my_color = a_new_color
@@ -38,6 +42,8 @@ func _movement(delta):
 	add_player_state()
 
 func add_player_state():
+	if pause_packets:
+		return
 	var player_state = {"T": Time.get_ticks_msec(), "P": get_global_position()}
 	WorldState.add_player_state(player_state)
 

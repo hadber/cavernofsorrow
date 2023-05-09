@@ -39,7 +39,7 @@ func _ready():
 	$UI/Side/MarginContainer/VBoxContainer/Interpolation/CheckButton.toggled.connect($MP/Client.change_intp)
 	$UI/Side/MarginContainer/VBoxContainer/Extrapolation/CheckButton.toggled.connect($MP/Client.change_extp)
 	$UI/Side/MarginContainer/VBoxContainer/IntOffset/SpinBox.value_changed.connect($MP/Client.change_offset)
-
+	$UI/Side/MarginContainer/VBoxContainer/PausePackets/CheckButton.toggled.connect($Player.set_pause_packets)
 
 func _setup_steam():
 	Steam.steamInit()
