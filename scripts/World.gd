@@ -33,6 +33,7 @@ func _ready():
 	Steam.lobby_chat_update.connect(_on_lobby_chat_update)
 
 	WorldState.world_root = self
+	WorldState.add_local_player()
 
 func _setup_steam():
 	Steam.steamInit()
@@ -114,8 +115,8 @@ func _on_lobby_joined(lobby_id:int, _permissions:int, _locked:bool, response:int
 				continue
 			var session:Dictionary = Steam.getP2PSessionState(member.steam_id)
 			if(session == {}): # session does not exist
-				_make_p2p_handshake()
-			spawn_on_remote(member.steam_id, WorldState.Player1.position.x, WorldState.Player1.position.y)
+				_make_p2p_handshake() # why do we shake hands with everyone?
+			spawn_on_remote(member.steam_id, WorldState.Player1.position.x, WorldState.Player1.position.y, WorldState.Player1.my_color)
 		# if there is a connection active, we will get a dictionary that is populated with
 		# all sorts of things (check steam documentations to find out
 		# otherwise, we will get an empty dicitonary
@@ -166,7 +167,7 @@ func _read_p2p_packet():
 				$MP/Server.update_remote_playerstate(packetRead, packet.steam_id_remote)
 			Packet.SPAWN_PLAYER:
 				print("Trying to spawn player on: ", packetRead)
-				WorldState.add_remote_player(senderID, Vector2(packetRead.x, packetRead.y))
+				WorldState.add_remote_player(senderID, Vector2(packetRead.x, packetRead.y), packetRead.my_color)
 			Packet.GET_SERVERTIME:
 				var sTimes:Dictionary = {"S": Time.get_ticks_msec(), "C": packetRead.T}
 				_send_p2p_packet(senderID, Steam.P2P_SEND_RELIABLE, Packet.SET_SERVERTIME, sTimes)
@@ -219,7 +220,7 @@ func _on_lobby_chat_update(_lobby_id:int, changed_id:int, making_change_id:int, 
 	
 	match chat_state:
 		1: # player has joined the lobby
-			spawn_on_remote(making_change_id, WorldState.Player1.position.x, WorldState.Player1.position.y)
+			#spawn_on_remote(making_change_id, WorldState.Player1.position.x, WorldState.Player1.position.y, )
 			print(changer_name, " has joined the game.")
 		2: # player has left the lobby
 			print(changer_name, " has left the game.")
@@ -275,5 +276,5 @@ func _on_p2p_session_connect_fail(lobby_id:int, session_error:int):
 		_: # unknown error happened 
 			print("Session failure with %s [unknown error]" % str(lobby_id))
 
-func spawn_on_remote(targetID:int, posx:float, posy:float):
-	_send_p2p_packet(str(targetID), Steam.P2P_SEND_RELIABLE, Packet.SPAWN_PLAYER, {"x": posx, "y": posy})
+func spawn_on_remote(targetID:int, posx:float, posy:float, my_color:Color = Color.GHOST_WHITE):
+	_send_p2p_packet(str(targetID), Steam.P2P_SEND_RELIABLE, Packet.SPAWN_PLAYER, {"x": posx, "y": posy, "my_color": my_color})

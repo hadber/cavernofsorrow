@@ -1,9 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://bl8kb2np813nd"]
+[gd_scene load_steps=11 format=3 uid="uid://bl8kb2np813nd"]
 
 [ext_resource type="Texture2D" uid="uid://cg7swosjwr1de" path="res://assets/things_0.png" id="1_dm7p8"]
 [ext_resource type="Texture2D" uid="uid://d01v2j8yy8mcr" path="res://assets/basictiles_2.png" id="1_s7key"]
 [ext_resource type="Script" path="res://scripts/World.gd" id="1_xb3n4"]
-[ext_resource type="PackedScene" uid="uid://bvkl10q86vbd3" path="res://scenes/Player.tscn" id="3_xycce"]
 [ext_resource type="Theme" uid="uid://bsdrrocbmnd5j" path="res://assets/Theme.tres" id="4_xnsvv"]
 [ext_resource type="Script" path="res://scripts/Client.gd" id="6_j7jij"]
 [ext_resource type="Script" path="res://scripts/Server.gd" id="6_n2hot"]
@@ -648,10 +647,6 @@ layer_2/y_sort_origin = 0
 layer_2/z_index = 0
 layer_2/tile_data = PackedInt32Array(65546, 327681, 6, 65547, 458753, 6, 10, 327681, 5, 65542, 1, 7, 458763, 458753, 4, 65537, 262145, 7, 327687, 262145, 7, 262150, 196609, 3, 196614, 196609, 3, 262146, 262145, 4, 327683, 458753, 4, 196610, 458753, 4, 458754, 65537, 7, 65538, 458753, 5, 262153, 0, 3, 8, 589824, 4)
 
-[node name="Player" parent="." instance=ExtResource("3_xycce")]
-position = Vector2(171, 347)
-metadata/_edit_group_ = true
-
 [node name="OtherPlayers" type="Node2D" parent="."]
 y_sort_enabled = true
 
@@ -804,6 +799,7 @@ layout_mode = 2
 
 [node name="LobbyText" type="Label" parent="UI/Side/MarginContainer/VBoxContainer/LobbyCont"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Lobby ID:"
 
 [node name="LobbyID" type="TextEdit" parent="UI/Side/MarginContainer/VBoxContainer/LobbyCont"]

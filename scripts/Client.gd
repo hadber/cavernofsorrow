@@ -37,7 +37,7 @@ func _physics_process(delta):
 	
 	#var renderTime = Time.get_ticks_msec() - INTERP_OFFSET
 	var renderTime = clientClock - INTERP_OFFSET
-	if worldStateBuffer.size() > 1:
+	if worldStateBuffer.size() > 1: # interpolation
 		while worldStateBuffer.size() > 2 and renderTime > worldStateBuffer[2]["T"]:
 			worldStateBuffer.pop_at(0)
 		if worldStateBuffer.size() > 2:
@@ -58,7 +58,7 @@ func _physics_process(delta):
 					Multiplayer.get_node("OtherPlayers/" + str(playerID)).remote_movement(newPos)
 				else:
 					WorldState.add_remote_player(str(playerID), worldStateBuffer[2][playerID]["P"])
-		elif renderTime > worldStateBuffer[1].T:
+		elif renderTime > worldStateBuffer[1].T: # extrapolation
 			var extrapolationFactor = float(renderTime - worldStateBuffer[0]["T"]) / float(worldStateBuffer[1]["T"] - worldStateBuffer[0]["T"]) - 1.0
 			for playerID in worldStateBuffer[1].keys():
 				if str(playerID) == "T":
@@ -107,8 +107,10 @@ func set_server_time(sTimes:Dictionary):
 	cLatency = (Time.get_ticks_msec() - sTimes.C) / 2
 	clientClock = sTimes.S + cLatency
 
+#currently unused
 func spawn_player(pSteamID:String, pPos:Vector2):
 	WorldState.add_remote_player(pSteamID, pPos)
-	
+
+#currently unused
 func despawn_player(pSteamID:String):
 	WorldState.remove_remote_player(pSteamID)
