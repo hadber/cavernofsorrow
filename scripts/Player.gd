@@ -29,7 +29,11 @@ func _movement(delta):
 #		animationPlayer.play("Idle")
 		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 	move_and_slide() 
-#	add_player_state()
+	add_player_state()
+
+func add_player_state():
+	var player_state = {"T": Time.get_ticks_msec(), "P": get_global_position()}
+	WorldState.add_player_state(player_state)
 
 func _physics_process(delta):
 	# Get the input direction and handle the movement/deceleration.
@@ -41,4 +45,5 @@ func _physics_process(delta):
 #		velocity.x = move_toward(velocity.x, 0, SPEED)
 #
 #	move_and_slide()
-	_movement(delta)
+	if(not networked):
+		_movement(delta)

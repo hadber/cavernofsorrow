@@ -11,7 +11,7 @@ func _ready():
 	$ProcessingTimer.start(1.0 / tickRate)
 
 func send_world_state(worldState:Dictionary):
-	Multiplayer._send_p2p_packet("all", Multiplayer.SENDTYPES.UNRELIABLE, Multiplayer.PACKETS.WORLDSTATE, worldState)
+	Multiplayer._send_p2p_packet("all", Steam.P2P_SEND_UNRELIABLE, Multiplayer.Packet.WORLDSTATE, worldState)
 	
 func update_remote_playerstate(recievedState:Dictionary, playerID:int):
 	if(pStates.has(playerID)):

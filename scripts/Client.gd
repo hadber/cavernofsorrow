@@ -46,7 +46,7 @@ func _physics_process(delta):
 				if str(playerID) == "T":
 					# its the timestamp of the worldstate (one of the dict entries)
 					continue
-				if playerID == Global.gSteamID:
+				if playerID == Global.my_steam_id:
 					# we just found ourselves in the worldstate, we dont care about this!
 					continue
 				if not worldStateBuffer[1].has(playerID):
@@ -63,7 +63,7 @@ func _physics_process(delta):
 			for playerID in worldStateBuffer[1].keys():
 				if str(playerID) == "T":
 					continue
-				if playerID == Global.gSteamID:
+				if playerID == Global.my_steam_id:
 					continue
 				if not worldStateBuffer[1].has(playerID):
 					continue

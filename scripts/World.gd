@@ -52,7 +52,7 @@ func _setup_steam():
 func _create_lobby():
 	print("Attempting to create a lobby...")
 	button_host.disabled = true
-	if Global.steamLobbyID == 0:
+	if Global.steam_lobby_id == 0:
 		Steam.createLobby(Steam.LOBBY_TYPE_INVISIBLE, 4)
 	else:
 		print("Already in a lobby! Can't create a new one.")
@@ -75,8 +75,8 @@ func _on_lobby_created(connection_result: int, lobby_id: int):
 	match connection_result:
 		1:
 			print("SUCCESS: The lobby was successfully created. (ID: ", lobby_id ,")")
-			Global.steamLobbyID = lobby_id
-			host_steam_id = Global.gSteamID
+			Global.steam_lobby_id = lobby_id
+			host_steam_id = Global.my_steam_id
 			
 			var allowRelay = Steam.allowP2PPacketRelay(true)
 			print("Allowing P2P packet relay: " + str(allowRelay))
@@ -126,7 +126,7 @@ func _get_lobby_members():
 	lobby_members.clear()
 	var total_members:int = Steam.getNumLobbyMembers(Global.steam_lobby_id)
 	for member in range(0, total_members):
-		var member_steam_id:int = Steam.getLobbyMemberByIndex(Global.steamLobbyID, member)
+		var member_steam_id:int = Steam.getLobbyMemberByIndex(Global.steam_lobby_id, member)
 		var member_steam_name:String = Steam.getFriendPersonaName(member_steam_id)
 		# append them to the lobby members array
 		lobby_members.append({"steam_id": member_steam_id, "steam_name": member_steam_name})
@@ -188,8 +188,8 @@ func _send_p2p_packet(target:String, sendType:int, packet_type:Packet, sendDict:
 	# probably do
 	if target == "all": # broadcast to all members
 		if lobby_members.size() > 1:
-			for member in Packet:
-				if member['steam_id'] != Global.gSteamID:
+			for member in lobby_members:
+				if member['steam_id'] != Global.my_steam_id:
 					Steam.sendP2PPacket(member['steam_id'], data, sendType, 0)
 		if i_am_host():
 			if packet_type == Packet.WORLDSTATE:
@@ -197,7 +197,7 @@ func _send_p2p_packet(target:String, sendType:int, packet_type:Packet, sendDict:
 	elif target == "host":
 		if i_am_host():
 			if packet_type == Packet.PLAYERSTATE:
-				$MP/Server.update_remote_playerstate(sendDict, Global.gSteamID)
+				$MP/Server.update_remote_playerstate(sendDict, Global.my_steam_id)
 			elif packet_type == Packet.GET_SERVERTIME:
 				var sTimes:Dictionary = {"S": Time.get_ticks_msec(), "C": sendDict.T}
 				$MP/Client.set_server_time(sTimes)

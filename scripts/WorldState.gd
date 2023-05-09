@@ -10,7 +10,7 @@ var currentRoom
 
 func _ready():
 	pass
-	#Player1 = PlayerScene.instantiate()
+	Player1 = PlayerScene.instantiate()
 #	Player1.get_node("CenterContainer/Name").text = Steam.getFriendPersonaName(Global.gSteamID)
 
 func add_remote_player(pSteamID:String, pPos:Vector2):
